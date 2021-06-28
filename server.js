@@ -15,6 +15,8 @@ const { Pool } = require('pg');
 const dbParams = require('./lib/db.js');
 const db = new Pool(dbParams);
 db.connect();
+const fs = require("fs")
+const sass = require("sass");
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -29,6 +31,19 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //   debug: true,
 //   outputStyle: 'expanded'
 // }));
+
+app.get("/styles/:css_file", (req, res, next) => {
+  const cssFilename = req.params.css_file.replace(/\.[^/.]+$/, "")
+  const rendered = sass.renderSync({
+    file: `${__dirname}/styles/${cssFilename}.scss`,
+    outFile: `${__dirname}/public/styles/${cssFilename}.css`,
+    debug: true,
+    outputStyle: 'expanded'
+  })
+  fs.writeFileSync(`${__dirname}/public/styles/${cssFilename}.css`, rendered.css.toString())
+  next()
+});
+
 app.use(express.static("public"));
 
 // Separated Routes for each Resource
