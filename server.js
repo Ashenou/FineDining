@@ -6,7 +6,7 @@ const PORT       = process.env.PORT || 8080;
 const ENV        = process.env.ENV || "development";
 const express    = require("express");
 const bodyParser = require("body-parser");
-const sass       = require("node-sass-middleware");
+// const sass       = require("node-sass-middleware");
 const app        = express();
 const morgan     = require('morgan');
 
@@ -23,32 +23,39 @@ app.use(morgan('dev'));
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use("/styles", sass({
-  src: __dirname + "/styles",
-  dest: __dirname + "/public/styles",
-  debug: true,
-  outputStyle: 'expanded'
-}));
+// app.use("/styles", sass({
+//   src: __dirname + "/styles",
+//   dest: __dirname + "/public/styles",
+//   debug: true,
+//   outputStyle: 'expanded'
+// }));
 app.use(express.static("public"));
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
-const usersRoutes = require("./routes/users");
-const widgetsRoutes = require("./routes/widgets");
+// const usersRoutes = require("./routes/users");
+const homePageRoutes = require('./routes/index')
+app.use('/', homePageRoutes);
+
+const restaurantRoutes = require('./routes/restaurantRoutes')
+// app.use('/', homePageRoutes);
+
+const userRoutes = require('./routes/userRoutes')
+// app.use('/', homePageRoutes);
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
-app.use("/api/users", usersRoutes(db));
-app.use("/api/widgets", widgetsRoutes(db));
+// app.use("/api/users", usersRoutes(db));
+
 // Note: mount other resources here, using the same pattern above
 
 
 // Home page
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
-app.get("/", (req, res) => {
-  res.render("index");
-});
+// app.get("/", (req, res) => {
+//   res.render("index");
+// });
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
