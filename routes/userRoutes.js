@@ -10,7 +10,8 @@ module.exports = (db) => {
     res.render("login");
   })
   router.post("/", (req,res) => {
-    db.query(`SELECT * FROM users WHERE email = $1 AND passowrd = $2;`, [req.body.email, req.body.password])
+    console.log(req.body.email, req.body.password)
+    db.query(`SELECT * FROM users WHERE email = $1 AND password = $2;`, [req.body.email, req.body.password])
     .then((result) => {
       return result.rows[0];
     })

@@ -4,3 +4,4 @@ INSERT INTO users (name,phone_number, email, password) VALUES ('Robo Barista', +
 INSERT INTO users (name,phone_number, email, password) VALUES ('Nakul Sapkal', +17057839641, 'nakul.sapkal@gmail.com','password');
 INSERT INTO users (name,phone_number, email, password) VALUES ('Jacob FitzGerald', +17057839641, 'jacob.fitzgerald@outlook.com', 'password');
 INSERT INTO users (name,phone_number, email, password) VALUES ('Abanoub', +17057839641,'abanoub@users.com','password');
+INSERT INTO users (name,phone_number, email, password) VALUES ('example user', +17057839641,'user@example.com','password');
