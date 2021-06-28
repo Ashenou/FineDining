@@ -1,0 +1,12 @@
+DROP TABLE IF EXISTS items CASCADE;
+
+
+CREATE TABLE items(
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(255) NOT NULL,
+	description TEXT NOT NULL,
+	cost BIGINT NOT NULL,
+	img_url VARCHAR(255),
+	portion VARCHAR(255),
+	type_id INTEGER REFERENCES item_type(id)
+);

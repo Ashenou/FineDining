@@ -1,0 +1,7 @@
+DROP TABLE IF EXISTS item_type CASCADE;
+
+
+CREATE TABLE item_type (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(50) NOT NULL
+);
