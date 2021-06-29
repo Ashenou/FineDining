@@ -63,9 +63,9 @@ const restaurantRoutes = require("./routes/restaurantRoutes");
 const userRoutes = require("./routes/userRoutes");
 app.use('/users', userRoutes(db));
 
-// ///users/:id/orders/endpoints **CORRECT THIS
-const ordersRouters = require("./routes/ordersRoutes");
-app.use('/orders', ordersRouters(db));
+// ///users/:id/items/endpoints **CORRECT THIS
+const itemsRoutes = require("./routes/itemsRoutes");
+app.use('/items', itemsRoutes(db));
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own

@@ -3,19 +3,28 @@ const router = express.Router();
 
 module.exports = (db) => {
   // GET /login -- View login page
-  router.get("/orders", (req, res) => {
+  router.get("/", (req, res) => {
+
+    let templateVars = {};
+
     db.query(
       `SELECT *
     FROM items
     JOIN item_type ON items.type_id = item_type.id ;`
     )
-      .then((result) => console.log(result.rows[0]))
+      .then((result) => {
+
+        //console.log(result.rows);
+        templateVars["items"] = result.rows;
+        console.log("line 18",templateVars["items"]);
+        return res.render("items",templateVars);
+      })
       .catch((err) => console.log(err));
-    return res.render("orders");
+
   });
 
   // POST /login -- Checks if user exists in database
-  router.post("/orders", (req, res) => {
+  router.post("/items", (req, res) => {
     // const email = req.body.email;
     // const password = req.body.password;
     // db.query(`SELECT * FROM users WHERE email = $1 AND password = $2;`, [
