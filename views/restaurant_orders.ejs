@@ -18,11 +18,11 @@
             <thead>
                 <tr>
                     <th scope="col">Order Id</th>
-                    <th scope="col">created_at</th>
-                    <th scope="col">completed_at</th>
-                    <th scope="col">item_name</th>
-                    <th scope="col">user_id</th>
-                    <th scope="col">order_status</th>
+                    <th scope="col">Created_at</th>
+                    <th scope="col">Completed_at</th>
+                    <th scope="col">Item_names</th>
+                    <th scope="col">User_id</th>
+                    <th scope="col">Order_status</th>
                     <th scope="col">Accept/Submit</th>
                 </tr>
             </thead>
@@ -39,13 +39,15 @@
                             <%= row.completed_at %>
                         </td>
                         <td>
-                            <%= row.item_name %>
+                            <% for(let item of row.item_name) { %>
+                                <%= item + ','%>
+                                    <%} %>
                         </td>
                         <td>
                             <%= row.user_id %>
                         </td>
                         <td>
-                            <%= order_status %>
+                            <%= row.order_status %>
                         </td>
                         <td>
                             <%if(row.completed_at){%>

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 var cookie = require('cookie')
-
+const formatArrayObject = require('../helper')
 
 // /user/login
 module.exports = (db) => {
@@ -19,7 +19,7 @@ module.exports = (db) => {
         res.cookie('user', result.rows[0])
         if (result.rows[0].restaurant_account === true) {
 
-          db.query(`SELECT orders.id,created_at,completed_at, user_id, (items.name) as item_name
+          db.query(`SELECT orders.id,created_at,completed_at, user_id,order_status, (items.name) as item_name
           FROM orders
           JOIN users on users.id=user_id
           JOIN order_items on order_id = orders.id
@@ -27,11 +27,10 @@ module.exports = (db) => {
           WHERE completed_at IS NULL
           GROUP BY orders.id,item_name,user_id;`)
             .then((result) => {
+              const data = formatArrayObject(result.rows);
 
-              const data = result.rows;
               const templateVars = {
-                data,
-                order_status: 'Order Received'
+                data
               }
               res.render("restaurant_orders", templateVars);
             })
