@@ -27,6 +27,8 @@ module.exports = (db) => {
           WHERE completed_at IS NULL
           GROUP BY orders.id,item_name,user_id;`)
             .then((result) => {
+
+              //formatting the object
               const data = formatArrayObject(result.rows);
 
               const templateVars = {
