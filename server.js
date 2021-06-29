@@ -52,14 +52,20 @@ app.use(express.static("public"));
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
 // const usersRoutes = require("./routes/users");
-const apiRoutes = require("./routes/apiRoutes");
-app.use("/", apiRoutes);
+// const apiRoutes = require("./routes/apiRoutes");
+// app.use("/", apiRoutes);
 
+// /restaurant/endpoints
 const restaurantRoutes = require("./routes/restaurantRoutes");
 // app.use('/', homePageRoutes);
 
+// /users/endpoints
 const userRoutes = require("./routes/userRoutes");
-app.use("/login", userRoutes(db));
+app.use('/users', userRoutes(db));
+
+// ///users/:id/orders/endpoints **CORRECT THIS
+const ordersRouters = require("./routes/ordersRoutes");
+app.use('/orders', ordersRouters(db));
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -70,9 +76,9 @@ app.use("/login", userRoutes(db));
 // Home page
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
-// app.get("/", (req, res) => {
-//   res.render("index");
-// });
+app.get("/", (req, res) => {
+  res.render("index");
+});
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
