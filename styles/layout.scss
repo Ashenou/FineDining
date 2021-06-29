@@ -13,9 +13,25 @@ body {
 }
 
 .navbar-brand {
-  color: aquamarine;
+  color: white;
 }
 
-.nav-item {
-  color: aquamarine;
+a.nav-link {
+  color: white;
+}
+
+button.btn {
+  margin: 5px;
+}
+
+.display-4 {
+  color: white;
+}
+
+footer {
+  background-color: #FFF2EB;
+  position: fixed;
+  height: 100px;
+  bottom: 0;
+  width: 100%;
 }

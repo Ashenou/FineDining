@@ -17,10 +17,20 @@ overflow: hidden;
 <!-- Background image -->
 <%- include('_partials/_header') %>
 <body>
-    <% if (!user) { %>
-    <p>please login or create account</p>
-    <% } %>
-  <p>Hello welcome to our restaurant</p>
+  <div class="container">
+    <div class="pt-5 text-white">
+      <header class="py-5 mt-5">
+        <h1 class="display-4">Welcome! <br/> please login before ordering</h1>
+        <p class="lead mb-0">we have implimented a text notification system for you convenience</p>
+      </header>
+    </div>
+  </div>
+
+  <footer>
+    <div class="foot-container">
+      <h1>Test text</h1>
+    </div>
+  </footer>
 </body>
 </html>
 
