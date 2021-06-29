@@ -7,7 +7,8 @@ const formatArrayObject = require('../helper')
 module.exports = (db) => {
   // GET / -- View login page
   router.get("/", (req, res) => {
-      res.render("login");
+      templateVars = { user: req.cookies.user }
+      res.render("login", templateVars);
     })
     // POST / -- Checks if user exists in database
   router.post("/", (req, res) => {

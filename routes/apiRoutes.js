@@ -10,7 +10,9 @@ const router = express.Router();
 
 
 router.get("/", (req, res) => {
-  res.render("index");
+  //console.log(req.cookies)
+  templateVars = {user: req.cookies.user}
+  res.render("index", templateVars);
 });
 
 module.exports = router;
