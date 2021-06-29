@@ -1,19 +1,25 @@
 const express = require('express');
 const router = express.Router();
+var cookie = require('cookie')
 
 
 
 
-
+// /user/login
 module.exports = (db) => {
+   // GET / -- View login page
   router.get("/", (req, res) => {
     res.render("login");
   })
+  // POST / -- Checks if user exists in database
   router.post("/", (req,res) => {
-    console.log(req.body.email, req.body.password)
-    db.query(`SELECT * FROM users WHERE email = $1 AND password = $2;`, [req.body.email, req.body.password])
+    const email = req.body.email;
+    const password = req.body.password;
+    db.query(`SELECT * FROM users WHERE email = $1 AND password = $2;`, [email, password])
     .then((result) => {
-      return result.rows[0];
+      //console.log(result.rows[0])
+      res.cookie('user', result.rows[0])
+      return res.redirect('/');
     })
     .catch((err) => {
     console.log(err.message);

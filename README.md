@@ -41,3 +41,9 @@ The following steps are only for _one_ of the group members to perform.
 - Node 10.x or above
 - NPM 5.x or above
 - PG 6.x
+
+
+Group members: Abanoub, Nakul, and myself
+Working on: Pair programming back end and routes
+Difficulties: SASS doesnt work with higher node versions
+Overal %: 10
