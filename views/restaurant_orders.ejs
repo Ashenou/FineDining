@@ -33,13 +33,21 @@
                             <%= row.id %>
                         </td>
                         <td>
-                            <%= row.created_at %>
+                            <%=(row.created_at).toISOString().slice(0, 19).replace("T", " ")%>
                         </td>
                         <td>
-                            <%= row.accepted_at %>
+                            <%if(row.accepted_at){%>
+                                <%=(row.accepted_at).toISOString().slice(0, 19).replace("T", " ")%>
+                                    <%}else{%>
+                                        <%=row.accepted_at%>
+                                            <%}%>
                         </td>
                         <td>
-                            <%= row.completed_at %>
+                            <%if(row.completed_at){%>
+                                <%=(row.completed_at).toISOString().slice(0, 19).replace("T", " ")%>
+                                    <%}else{%>
+                                        <%=row.completed_at%>
+                                            <%}%>
                         </td>
                         <td>
                             <% for(let item of row.item_names) { %>
@@ -50,13 +58,14 @@
                             <%= row.user_id %>
                         </td>
                         <td>
-                            <%if(row.completed_at){%>
+                            <%if(row.accepted_at){%>
                                 <form method="POST" action="/">
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                 </form>
                                 <%}else{%>
-                                    <form method="GET" action="/">
+                                    <form method="POST" action="/orders">
                                         <button type="submit" class="btn btn-primary">Accept</button>
+                                        <input type='hidden' value='<%= row.id%>' name='orderId'>
                                     </form>
                                     <%}%>
                         </td>
