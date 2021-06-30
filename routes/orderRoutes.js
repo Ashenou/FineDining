@@ -1,16 +1,14 @@
 const express = require('express');
 const router = express.Router();
 var cookie = require('cookie')
-const formatArrayObject = require('./helper')
+const formatArrayObject = require('../public/helper/helper')
 
 module.exports = (db) => {
   // GET :/orders Display's' orders for the restaurant portal
   router.get("/", (req, res) => {
-    let user = req.cookies;
-    console.log(user);
+    let user = req.cookies.user;
     //Check if account is user's or restaurant's account
-    //if (user.restaurant_id === true) {
-    if (true) {
+    if (user.restaurant_account) {
 
       db.query(`SELECT orders.id,created_at,completed_at,accepted_at, user_id, (items.name) as item_name
           FROM orders
@@ -32,14 +30,12 @@ module.exports = (db) => {
         .catch((err) => {
           console.log(err.message);
         })
+        //this is to show the timer for the current order in process and order information.
     } else {
       //Orders route for user display
       return res.redirect('/');
     }
   });
-
-
-
 
   return router;
 }
