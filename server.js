@@ -49,14 +49,14 @@ app.get("/styles/:css_file", (req, res, next) => {
 
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
-let client = new twilio(accountSid, authToken);
 
-client.messages.create({
-    body: 'Hello from Node',
-    to: '+17057839641',  // Text this number
-    from: '+17052425790' // From a valid Twilio number
-})
-.then((message) => console.log(message.sid));
+const client = new twilio(accountSid, authToken);
+// client.messages.create({
+    // body: 'Hello from Node',
+    // to: '+17057839641',  // Text this number
+    // from: '+17052425790' // From a valid Twilio number
+// })
+// .then((message) => message.sid);
 
 
 app.use(express.static("public"));
