@@ -6,7 +6,8 @@ var cookie = require('cookie')
 module.exports = (db) => {
   // GET /login -- View login page
   router.get("/", (req, res) => {
-    return res.render("login");
+    templateVars = { user: req.cookies.user }
+    res.render("login", templateVars);
   });
 
   // POST /login -- Checks if user exists in database
