@@ -7,9 +7,11 @@ const ENV = process.env.ENV || "development";
 const express = require("express");
 const bodyParser = require("body-parser");
 const cookieParser = require('cookie-parser')
-  // const sass       = require("node-sass-middleware");
+
+// const sass       = require("node-sass-middleware");
 const app = express();
 const morgan = require('morgan');
+const twilio = require('twilio');
 
 // PG database client/connection setup
 const { Pool } = require('pg');
@@ -45,6 +47,18 @@ app.get("/styles/:css_file", (req, res, next) => {
   fs.writeFileSync(`${__dirname}/public/styles/${cssFilename}.css`, rendered.css.toString())
   next()
 });
+
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+
+const client = new twilio(accountSid, authToken);
+// client.messages.create({
+// body: 'Hello from Node',
+// to: '+17057839641',  // Text this number
+// from: '+17052425790' // From a valid Twilio number
+// })
+// .then((message) => message.sid);
+
 
 app.use(express.static("public"));
 
