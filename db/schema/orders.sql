@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS orders CASCADE;
 CREATE TABLE orders (
 	id SERIAL PRIMARY KEY,
   created_at TIMESTAMP NOT NULL,
-	compeleted_at TIMESTAMP,
-  accepted_at TIMESTAMP,
-	user_id INTEGER REFERENCES users(id) ON DELETE CASCADE);
+	accepted_at TIMESTAMP,
+	completed_at TIMESTAMP,
+	user_id INTEGER REFERENCES users(id) ON DELETE CASCADE
+  );

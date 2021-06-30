@@ -7,3 +7,31 @@ body {
     color: #244751;
   }
 }
+
+.navbar-inner {
+  background-color: transparent;
+}
+
+.navbar-brand {
+  color: white;
+}
+
+a.nav-link {
+  color: white;
+}
+
+button.btn {
+  margin: 5px;
+}
+
+.display-4 {
+  color: white;
+}
+
+footer {
+  background-color: #FFF2EB;
+  position: fixed;
+  height: 100px;
+  bottom: 0;
+  width: 100%;
+}

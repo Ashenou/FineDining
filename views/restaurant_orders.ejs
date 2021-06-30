@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <title>Restaurant Orders Portal</title>
+</head>
+
+<body>
+
+    <main style="margin: 1em;">
+        <h3>Restaurant Orders Portal</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Order Id</th>
+                    <th scope="col">Created_At</th>
+                    <th scope="col">Accepted_At</th>
+                    <th scope="col">Completed_At</th>
+                    <th scope="col">Item_List</th>
+                    <th scope="col">User_Id</th>
+                    <th scope="col">Accept/Submit</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for(let row of data) { %>
+                    <tr>
+                        <td>
+                            <%= row.id %>
+                        </td>
+                        <td>
+                            <%= row.created_at %>
+                        </td>
+                        <td>
+                            <%= row.accepted_at %>
+                        </td>
+                        <td>
+                            <%= row.completed_at %>
+                        </td>
+                        <td>
+                            <% for(let item of row.item_names) { %>
+                                <%= item %><br>
+                                    <%} %>
+                        </td>
+                        <td>
+                            <%= row.user_id %>
+                        </td>
+                        <td>
+                            <%if(row.completed_at){%>
+                                <form method="POST" action="/">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </form>
+                                <%}else{%>
+                                    <form method="GET" action="/">
+                                        <button type="submit" class="btn btn-primary">Accept</button>
+                                    </form>
+                                    <%}%>
+                        </td>
+                    </tr>
+                    <%} %>
+            </tbody>
+        </table>
+    </main>
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -7,7 +7,7 @@ const ENV = process.env.ENV || "development";
 const express = require("express");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
-// const sass       = require("node-sass-middleware");
+
 const app = express();
 const morgan = require("morgan");
 
@@ -52,6 +52,17 @@ app.get("/styles/:css_file", (req, res, next) => {
   next();
 });
 
+// const accountSid = process.env.TWILIO_ACCOUNT_SID;
+// const authToken = process.env.TWILIO_AUTH_TOKEN;
+
+//const client = new twilio(accountSid, authToken);
+// client.messages.create({
+// body: 'Hello from Node',
+// to: '+17057839641',  // Text this number
+// from: '+17052425790' // From a valid Twilio number
+// })
+// .then((message) => message.sid);
+
 app.use(express.static("public"));
 
 // Separated Routes for each Resource
@@ -66,12 +77,10 @@ const restaurantRoutes = require("./routes/restaurantRoutes");
 
 // /users/endpoints
 const userRoutes = require("./routes/userRoutes");
-app.use('/users', userRoutes(db,accountSid,authToken));
+app.use("/users", userRoutes(db, accountSid, authToken));
 
-
-// ///users/:id/items/endpoints **CORRECT THIS
-//const itemsRoutes = require("./routes/itemsRoutes");
-//app.use('/items', itemsRoutes(db));
+const orderRoutes = require("./routes/orderRoutes");
+app.use("/orders", orderRoutes(db));
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
