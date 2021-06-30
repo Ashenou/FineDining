@@ -2,14 +2,14 @@
 require('dotenv').config();
 
 // Web server config
-const PORT       = process.env.PORT || 8080;
-const ENV        = process.env.ENV || "development";
-const express    = require("express");
+const PORT = process.env.PORT || 8080;
+const ENV = process.env.ENV || "development";
+const express = require("express");
 const bodyParser = require("body-parser");
 const cookieParser = require('cookie-parser')
-// const sass       = require("node-sass-middleware");
-const app        = express();
-const morgan     = require('morgan');
+  // const sass       = require("node-sass-middleware");
+const app = express();
+const morgan = require('morgan');
 
 // PG database client/connection setup
 const { Pool } = require('pg');
@@ -27,12 +27,12 @@ app.use(morgan('dev'));
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser())
-// app.use("/styles", sass({
-//   src: __dirname + "/styles",
-//   dest: __dirname + "/public/styles",
-//   debug: true,
-//   outputStyle: 'expanded'
-// }));
+  // app.use("/styles", sass({
+  //   src: __dirname + "/styles",
+  //   dest: __dirname + "/public/styles",
+  //   debug: true,
+  //   outputStyle: 'expanded'
+  // }));
 
 app.get("/styles/:css_file", (req, res, next) => {
   const cssFilename = req.params.css_file.replace(/\.[^/.]+$/, "")
@@ -55,11 +55,14 @@ const apiRoutes = require('./routes/apiRoutes')
 app.use('/', apiRoutes);
 
 const restaurantRoutes = require('./routes/restaurantRoutes')
-// app.use('/', homePageRoutes);
+  // app.use('/', homePageRoutes);
 
 const userRoutes = require('./routes/userRoutes')
 app.use('/login', userRoutes(db));
 
+
+const orderRoutes = require('./routes/orderRoutes')
+app.use('/orders', orderRoutes(db));
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
