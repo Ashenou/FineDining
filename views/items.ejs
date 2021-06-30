@@ -27,7 +27,7 @@
 
     <div class="container">
 
-      <form method="POST" action="/items">
+      <form method="POST" action="/users/items">
         <div class='menu'>
           <div class="first-menu-column">
             <h3>Entree:</h3>
@@ -36,7 +36,7 @@
                 <div class="item">
                   <span>
                     <%= item.name %>
-                      <input type="checkbox" name="<% item.id %>" value="<% item.name %>">
+                    <input type="text" name="<%=item.id %>">
                   </span>
                   <br>
                   <%= item.description %>
@@ -48,8 +48,8 @@
                       <% if(item.item_type_name==='appetizer' ) {%>
                         <div class="item">
                           <span>
-                            <%= item.name %>
-                              <input type="checkbox" name="<% item.id %>" value="<% item.name %>">
+                            <%=item.name %>
+                              <input type="text" name="<%=item.id %>">
                           </span>
                           <br>
                           <%= item.description %>
@@ -65,7 +65,7 @@
                 <div class="item">
                   <span>
                     <%= item.name %>
-                      <input type="checkbox" name="<% item.id %>" value="<% item.name %>">
+                    <input type="text" name="<%= item.id %>">
                   </span>
                   <!-- <button type="button" class="btn btn-outline-primary">Add to cart</button> -->
                   <br>
