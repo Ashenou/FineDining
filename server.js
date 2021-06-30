@@ -18,6 +18,9 @@ db.connect();
 const fs = require("fs");
 const sass = require("sass");
 
+// Twilio env variables
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
@@ -61,7 +64,8 @@ const restaurantRoutes = require("./routes/restaurantRoutes");
 
 // /users/endpoints
 const userRoutes = require("./routes/userRoutes");
-app.use('/users', userRoutes(db));
+app.use('/users', userRoutes(db,accountSid,authToken));
+
 
 // ///users/:id/items/endpoints **CORRECT THIS
 //const itemsRoutes = require("./routes/itemsRoutes");
