@@ -74,7 +74,6 @@ module.exports = (db, accountSid, authToken) => {
   router.post("/", (req, res) => {
     let user = req.cookies.user;
 
-    console.log('Line 79:Req.Body :', req.body);
     //Check if account is user's or restaurant's account
     if (user.restaurant_account && req.body.accepted_OrderId) {
       //This query would update the order as accepted and create a timestamp for it.
@@ -113,7 +112,8 @@ module.exports = (db, accountSid, authToken) => {
             //formatting the Array of objects
             const data = formatArrayObject(resultAllOrders.rows);
             const templateVars = {
-              data
+              data,
+              user
             }
             res.render("restaurant_orders", templateVars);
           })
@@ -162,7 +162,8 @@ module.exports = (db, accountSid, authToken) => {
             //formatting the Array of objects
             const data = formatArrayObject(resultAllOrders.rows);
             const templateVars = {
-              data
+              data,
+              user
             }
             res.render("restaurant_orders", templateVars);
           })
