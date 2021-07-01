@@ -19,9 +19,6 @@ db.connect();
 const fs = require("fs");
 const sass = require("sass");
 
-// Twilio env variables
-const accountSid = process.env.TWILIO_ACCOUNT_SID;
-const authToken = process.env.TWILIO_AUTH_TOKEN;
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
@@ -55,31 +52,35 @@ app.get("/styles/:css_file", (req, res, next) => {
 // const accountSid = process.env.TWILIO_ACCOUNT_SID;
 // const authToken = process.env.TWILIO_AUTH_TOKEN;
 
-//const client = new twilio(accountSid, authToken);
-// client.messages.create({
-// body: 'Hello from Node',
-// to: '+17057839641',  // Text this number
-// from: '+17052425790' // From a valid Twilio number
-// })
-// .then((message) => message.sid);
+// const client = new twilio(accountSid, authToken);
+// // client.messages.create({
+// // body: 'Hello from Node',
+// // to: '+17057839641',  // Text this number
+// // from: '+17052425790' // From a valid Twilio number
+// // })
+// // .then((message) => message.sid);
+
+// Twilio env variables - send sms when order is accepted
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+
 
 app.use(express.static("public"));
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
 // const usersRoutes = require("./routes/users");
-// const apiRoutes = require("./routes/apiRoutes");
-// app.use("/", apiRoutes);
+const apiRoutes = require("./routes/apiRoutes");
+app.use("/", apiRoutes);
 
-// /restaurant/endpoints
-// app.use('/', homePageRoutes);
+// /users/endpoints
+const orderRoutes = require("./routes/orderRoutes");
+app.use('/orders', orderRoutes(db, accountSid, authToken));
 
 // /users/endpoints
 const userRoutes = require("./routes/userRoutes");
 app.use("/users", userRoutes(db, accountSid, authToken));
 
-const orderRoutes = require("./routes/orderRoutes");
-app.use("/orders", orderRoutes(db));
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own

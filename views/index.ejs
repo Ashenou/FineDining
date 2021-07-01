@@ -2,11 +2,12 @@
 <html lang="en">
 <head>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <link rel="stylesheet" href="/styles/layout.css"
+  <link rel="stylesheet" href="/styles/layout.css">
+  <link rel="stylesheet" type="text/css" href="/styles/footer.css" >
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Fine Dining - Orders</title>
 </head>
 <!-- Background image -->
 <style>body{background: url('https://images.pexels.com/photos/459501/pexels-photo-459501.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260') no-repeat center fixed;
@@ -14,6 +15,7 @@ background-size: cover;
 margin: 0;
 overflow: hidden;
 }</style>
+
 <!-- Background image -->
 <%- include('_partials/_header') %>
 <body>
@@ -27,9 +29,7 @@ overflow: hidden;
   </div>
 
   <footer>
-    <div class="foot-container">
-      <h1>Test text</h1>
-    </div>
+    <%- include('_partials/_footer') %>
   </footer>
 </body>
 </html>

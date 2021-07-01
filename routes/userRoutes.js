@@ -4,14 +4,13 @@ const router = express.Router();
 const twilio = require("twilio");
 
 module.exports = (db, accountSid, authToken) => {
-
-
   // GET /login -- View login page
   router.get("/login", (req, res) => {
     let templateVars = { user: req.cookies.user };
     res.render("login", templateVars);
   });
 
+  // POST /login -- Checks if user exists in database
   router.post("/login", (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
@@ -20,18 +19,21 @@ module.exports = (db, accountSid, authToken) => {
       password,
     ])
       .then((result) => {
-        res.cookie("user", result.rows[0]);
-        return res.redirect("/");
+        if (result.rows[0]) {
+          res.cookie("user", result.rows[0]);
+          return res.redirect("/");
+        } else {
+          console.log("login error");
+          return res.redirect("/users/login");
+        }
       })
       .catch((err) => {
         console.log(err.message);
       });
   });
 
-
   /// GET /items Shows restaurant's menu to user
   router.get("/items", (req, res) => {
-
     if (req.cookies["user"]) {
       let templateVars = {};
       db.query(
@@ -69,7 +71,6 @@ module.exports = (db, accountSid, authToken) => {
       })
       .catch((err) => console.log(err.message));
 
-
     // Returns an array of objects from select query where it checks the quantity and the name items in the user's order
     let textbodyObj = await Promise.all([
       (() => {
@@ -80,7 +81,6 @@ module.exports = (db, accountSid, authToken) => {
             orderFilled = true;
 
             for (let index = 0; index < req.body[item]; index++) {
-
               db.query(
                 `INSERT INTO order_items(order_id,item_id,customer_id,restaurant_id) VALUES($1,$2,$3,$4) RETURNING *;`,
                 [createdOrderId, item, userId, restaurantId]
@@ -108,8 +108,6 @@ module.exports = (db, accountSid, authToken) => {
       })
       .catch((err) => console.log(err.message));
 
-
-
     // Message body forming
     let textString = `${createdOrderId}`;
     for (const key in textbodyObj) {
@@ -126,7 +124,6 @@ module.exports = (db, accountSid, authToken) => {
         `SELECT phone_number FROM users where name='Fine Dine' AND restaurant_account=true ;`
       )
         .then((result) => {
-
           twilioClient.messages
             .create({
               body: `\n Customer: ${userName}  has submitted order:# ${textString} \n 😋😋`,
