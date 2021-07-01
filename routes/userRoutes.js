@@ -79,11 +79,8 @@ module.exports = (db, accountSid, authToken) => {
           if (req.body[item] !== "") {
             orderFilled = true;
 
-            //console.log("Line81",req.body[item]);
-
             for (let index = 0; index < req.body[item]; index++) {
-              //console.log("line76 [item]", item);
-              //console.log("line77 req.body[item]", req.body[item]);
+
               db.query(
                 `INSERT INTO order_items(order_id,item_id,customer_id,restaurant_id) VALUES($1,$2,$3,$4) RETURNING *;`,
                 [createdOrderId, item, userId, restaurantId]
@@ -119,8 +116,8 @@ module.exports = (db, accountSid, authToken) => {
       textString +=
         "\nx" + textbodyObj[key].quantity + " " + textbodyObj[key].name;
     }
-    // console.log("line 157", textString);
-    // console.log("line 85", req.cookies["user"].name);
+
+
 
     //Checks if order was not empty
     if (orderFilled) {
@@ -131,7 +128,7 @@ module.exports = (db, accountSid, authToken) => {
         `SELECT phone_number FROM users where name='Fine Dine' AND restaurant_account=true ;`
       )
         .then((result) => {
-          //console.log(result.rows[0].phone_number);
+
           twilioClient.messages
             .create({
               body: `\n Customer: ${userName}  has submitted order:# ${textString} \n 😋😋`,
