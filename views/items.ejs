@@ -18,12 +18,10 @@
   <!-- <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script> -->
   <!-- <script type="text/javascript" src="/scripts/app.js"></script>
   <script type="text/javascript" src="/routes/users.js"></script> -->
-  <title>Fine Dine - Orders</title>
+  <title>Fine Dining - Orders</title>
 </head>
-
-<body>
-
-  <%# include('partials/_header') %>
+<%- include('_partials/_header') %>
+<body class="order">
 
     <div class="container">
 
@@ -36,7 +34,7 @@
                 <div class="item">
                   <span>
                     <%= item.name %>
-                    <input type="text" name="<%=item.id %>">
+                      <input type="text" name="<%=item.id %>">
                   </span>
                   <br>
                   <%= item.description %>
@@ -65,7 +63,7 @@
                 <div class="item">
                   <span>
                     <%= item.name %>
-                    <input type="text" name="<%= item.id %>">
+                      <input type="text" name="<%= item.id %>">
                   </span>
                   <!-- <button type="button" class="btn btn-outline-primary">Add to cart</button> -->
                   <br>

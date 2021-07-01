@@ -39,7 +39,7 @@ function displayTime(second) {
   `;
 }
 function endCount() {
-  timeH.innerHTML = 'Order is ready';
+  timeH.innerHTML = 'Order completed! you should be notified soon';
 }
 // acceptedTime //// 23:29:14
 // currentTime //// 00:29:05
