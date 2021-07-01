@@ -1,0 +1,29 @@
+body{
+  display: flex;
+  align-content: center;
+}
+.container{
+ display: flex;
+ flex-direction: row;
+ //align-content:stretch;
+}
+.item{
+  border:solid 2px black;
+  font :bold;
+  margin :1px;
+  padding: 1px;
+}
+.menu{
+  display: flex;
+  flex-direction: row;
+}
+.first-menu-column{
+  align-items: flex-start ;
+  float:left;
+  width: 45%;
+}
+.second-menu-column{
+  align-items: flex-end;
+  float:right;
+  width: 45%;
+}

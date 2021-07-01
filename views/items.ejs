@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- <link rel="stylesheet" href="../public/styles/restaurant_items.css"> -->
+
+
+
+
+  <!-- <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" /> -->
+  <!-- <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" /> -->
+  <link rel="stylesheet" href="/styles/restaurant_items.css" type="text/css" />
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
+  <!-- <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script> -->
+  <!-- <script type="text/javascript" src="/scripts/app.js"></script>
+  <script type="text/javascript" src="/routes/users.js"></script> -->
+  <title>Fine Dine - Orders</title>
+</head>
+
+<body>
+
+  <%# include('partials/_header') %>
+
+    <div class="container">
+
+      <form method="POST" action="/users/items">
+        <div class='menu'>
+          <div class="first-menu-column">
+            <h3>Entree:</h3>
+            <% for(let item of items) { %>
+              <% if(item.item_type_name==='entree' ) {%>
+                <div class="item">
+                  <span>
+                    <%= item.name %>
+                    <input type="text" name="<%=item.id %>">
+                  </span>
+                  <br>
+                  <%= item.description %>
+                </div>
+                <% } %>
+                  <% } %>
+                    <h3>Appetiziers:</h3>
+                    <% for(let item of items) { %>
+                      <% if(item.item_type_name==='appetizer' ) {%>
+                        <div class="item">
+                          <span>
+                            <%=item.name %>
+                              <input type="text" name="<%=item.id %>">
+                          </span>
+                          <br>
+                          <%= item.description %>
+                        </div>
+                        <% } %>
+                          <% } %>
+          </div>
+
+          <div class="second-menu-column">
+            <h3>Beverage:</h3>
+            <% for(let item of items) { %>
+              <% if(item.item_type_name !=='entree' && item.item_type_name !=='appetizer' ) {%>
+                <div class="item">
+                  <span>
+                    <%= item.name %>
+                    <input type="text" name="<%= item.id %>">
+                  </span>
+                  <!-- <button type="button" class="btn btn-outline-primary">Add to cart</button> -->
+                  <br>
+                  <%= item.description %>
+                </div>
+                <% } %>
+                  <% } %>
+          </div>
+          <!-- <td><button type="submit" class="btn btn-outline-danger">Delete</button></td> -->
+        </div>
+        <button type="submit" id="submit">Create order</button>
+      </form>
+    </div>
+</body>
+<!-- <script>
+  document.getElementById("submit").onclick(alert("Your order was sent to restaurant"))
+</script> -->
+
+</html>

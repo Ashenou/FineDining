@@ -1,4 +1,4 @@
-DELETE FROM items_types;
+DELETE FROM item_type;
 
 INSERT INTO item_type (name) VALUES ('entree');
 INSERT INTO item_type (name) VALUES ('appetizer');

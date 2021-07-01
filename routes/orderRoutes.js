@@ -1,7 +1,6 @@
 const twilio = require("twilio");
 const express = require('express');
 const router = express.Router();
-
 const formatArrayObject = require('../public/helper/Format_ArrayObject')
 
 module.exports = (db, accountSid, authToken) => {
@@ -9,34 +8,69 @@ module.exports = (db, accountSid, authToken) => {
   router.get("/", (req, res) => {
     let user = req.cookies.user;
     //Check if account is user's or restaurant's account
-    if (user.restaurant_account) {
+    //let data = {};
 
-      db.query(`SELECT orders.id,created_at,completed_at,accepted_at, user_id, (items.name) as item_name
+    if (user) {
+      if (user.restaurant_account) {
+        db.query(`SELECT orders.id ,created_at,completed_at,accepted_at, user_id, (items.name) as item_name
           FROM orders
           JOIN users on users.id=user_id
           JOIN order_items on order_id = orders.id
           JOIN items on items.id = order_items.item_id
           WHERE completed_at IS NULL
           GROUP BY orders.id,item_name,user_id;`)
-        .then((result) => {
+          .then((result) => {
+            //formatting the Array of objects
+            const data = formatArrayObject(result.rows);
 
-          //formatting the Array of objects
-          const data = formatArrayObject(result.rows);
+            const templateVars = {
+              data,
+              user
+            }
 
-          const templateVars = {
-            data
-          }
-          res.render("restaurant_orders", templateVars);
-        })
-        .catch((err) => {
-          console.log(err.message);
-        })
+            res.render("restaurant_orders", templateVars);
+          })
+          .catch((err) => {
+            console.log(err.message);
+          });
         //this is to show the timer for the current order in process and order information.
+      } else {
+        //Orders route for user display
+
+        db.query(`SELECT orders.id, accepted_at, completed_at, user_id, (items.name) as item_name
+      FROM orders
+      JOIN users on users.id = user_id
+      JOIN order_items on order_id = orders.id
+      JOIN items on items.id = order_items.item_id
+      WHERE completed_at IS NULL AND user_id = $1
+      GROUP BY orders.id,item_name,user_id;`, [`${user.id}`])
+          .then((result) => {
+
+            const data = formatArrayObject(result.rows);
+
+            const templateVars = {
+              data,
+              user
+            }
+            console.log(result.rows)
+            res.render('user_orders', templateVars);
+          })
+          .catch((err) => {
+            console.log(err.message);
+          })
+      }
     } else {
-      //Orders route for user display
-      return res.redirect('/');
+      res.redirect('/login')
     }
   });
+
+  // router.post("/accepted", (req, res) => {
+  //   let id = req.body.orderid;
+  //   db.query(`update orders set accepted_at = current_timestamp where id = $1`, [id])
+  //     .then((result) => {
+  //       res.redirect("/orders");
+  //     });
+  // });
 
   // POST :/orders Display's' orders for the restaurant after orders are accepted/completed from restaurant
   router.post("/", (req, res) => {
@@ -98,4 +132,4 @@ module.exports = (db, accountSid, authToken) => {
 
 
   return router;
-}
+};
