@@ -57,12 +57,12 @@ module.exports = (db, accountSid, authToken) => {
     // convert js date to sql date
     //let createdOrderId = await ;
     let restaurantId = 1;
-    let userId = 1;
+    let userId = req.cookies.user.id;
     let orderFilled = false;
 
     let createdOrderId = await db
       .query(
-        `INSERT INTO ORDERS(created_at,user_id) VALUES ($1,1) RETURNING *;`, [new Date().toISOString().slice(0, 19).replace("T", " ")]
+        `INSERT INTO ORDERS(created_at,user_id) VALUES ($1,$2) RETURNING *;`, [new Date().toISOString().slice(0, 19).replace("T", " "), userId]
       )
       .then((res) => {
         return res.rows[0].id;
