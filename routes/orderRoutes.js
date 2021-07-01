@@ -52,7 +52,6 @@ module.exports = (db, accountSid, authToken) => {
               data,
               user
             }
-            console.log(result.rows)
             res.render('user_orders', templateVars);
           })
           .catch((err) => {
