@@ -36,8 +36,9 @@ module.exports = (db, accountSid, authToken) => {
     //// implement login login with req.id and req.restaurant_check
     let userId = req.cookies["user"].id;
     console.log("Line 62 ", userId);
+    const user = req.cookies.user;
 
-    let templateVars = {};
+    let templateVars = {user};
     db.query(
         `SELECT items.* , item_type.name as item_type_name
     FROM items

@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="/styles/orders.css" type="text/css" />
 
     <!-- Bootstrap CSS -->
 
@@ -11,8 +12,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
     <title>Restaurant Orders Portal</title>
 </head>
-
-<body>
+<%- include('_partials/_header') %>
+<body class="order">
 
 <main style="margin: 1em;">
     <h3>User Orders Portal</h3>
@@ -26,6 +27,7 @@
         </thead>
         <tbody>
             <% for(let row of data) { %>
+              <% if (!row.completed_at) { %>
           <tr>
             <td>
               <%= row.id %>
@@ -41,13 +43,14 @@
               <%if(!row.accepted_at){%>
                 <p id="Pickup">Order Pending</p>
               <%}else if (row.accepted_at) {%>
-                <h1 value="<%=row.accepted_at%>" id="user_timer"><input type="hid" id="accepted_at" value="<%=row.accepted_at%>"></h1>
+                <p value="<%=row.accepted_at%>" id="user_timer"><input type="hid" id="accepted_at" value="<%=row.accepted_at%>"></p>
               <%}%>
             </td>
             <td></td>
             </td>
           </tr>
-                <%} %>
+                <% } %>
+                <% } %>
         </tbody>
     </table>
 </main>
