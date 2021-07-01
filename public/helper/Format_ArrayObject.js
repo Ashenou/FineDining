@@ -6,11 +6,19 @@ const formatArrayObject = function(arrObj) {
     if (formattedArrObj[obj.id]) {
       //Push the item name in object's item_names array
       formattedArrObj[obj.id].item_names.push(obj.item_name);
+
+      //Push the item quantity in object's item_quantity array
+      formattedArrObj[obj.id].item_quantity.push(obj.quantity);
     } else {
       //Creating new object.
       const rObj = obj;
+
       //Creating item_names array to hold all the items of respective order
       rObj.item_names = [obj.item_name];
+
+      //Creating item_quantity array to hold quantity of the items in respective order
+      rObj.item_quantity = [obj.quantity];
+
       //Assigning newly created object to Array of objects at specified index(i.e rObj.id)
       formattedArrObj[rObj.id] = rObj;
     }
