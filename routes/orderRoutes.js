@@ -22,10 +22,7 @@ module.exports = (db, accountSid, authToken) => {
         ORDER BY orders.id;`)
           .then((result) => {
             //formatting the Array of objects
-            console.log('Line 26, result.rows: ', result.rows)
             const data = formatArrayObject(result.rows);
-            console.log('Line 26, DATA: ', data)
-
             const templateVars = {
               data,
               user
@@ -49,15 +46,11 @@ module.exports = (db, accountSid, authToken) => {
         GROUP BY orders.id,item_name,user_id;`, [`${user.id}`])
           .then((result) => {
 
-            console.log('Line 52, result.rows: ', result.rows)
             const data = formatArrayObject(result.rows);
-
-            console.log('Line 53, DATA: ', data)
             const templateVars = {
               data,
               user
             }
-            console.log(result.rows)
             res.render('user_orders', templateVars);
           })
           .catch((err) => {
@@ -119,7 +112,6 @@ module.exports = (db, accountSid, authToken) => {
 
             //formatting the Array of objects
             const data = formatArrayObject(resultAllOrders.rows);
-            console.log('Line 118, DATA: ', data)
             const templateVars = {
               data
             }
@@ -169,8 +161,6 @@ module.exports = (db, accountSid, authToken) => {
 
             //formatting the Array of objects
             const data = formatArrayObject(resultAllOrders.rows);
-
-            console.log('Line 169, DATA: ', data)
             const templateVars = {
               data
             }
