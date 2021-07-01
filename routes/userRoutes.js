@@ -18,8 +18,13 @@ module.exports = (db, accountSid, authToken) => {
       password,
     ])
       .then((result) => {
+        if (result.rows[0]) {
         res.cookie("user", result.rows[0]);
         return res.redirect("/");
+        } else {
+          console.log('login error')
+          return res.redirect("/users/login")
+        }
       })
       .catch((err) => {
         console.log(err.message);
