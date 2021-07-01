@@ -117,8 +117,6 @@ module.exports = (db, accountSid, authToken) => {
         "\nx" + textbodyObj[key].quantity + " " + textbodyObj[key].name;
     }
 
-
-
     //Checks if order was not empty
     if (orderFilled) {
       // Twilio Implementation
