@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const formatArrayObject = require('../public/helper/Format_ArrayObject')
 
-module.exports = (db, accountSid, authToken) => {
+module.exports = (db, accountSid, authToken, twilioNumber) => {
   // GET :/orders Display's' orders for the restaurant portal
   router.get("/", (req, res) => {
     let user = req.cookies.user;
@@ -93,7 +93,7 @@ module.exports = (db, accountSid, authToken) => {
             .create({
               body: `Your food is being prepared stay tuned!`,
               to: `${resultUserOrder.rows[0].phone_number}`, // Text this number
-              from: "+17052425790", // From a valid Twilio number
+              from: `${twilioNumber}`, // From a valid Twilio number
             })
             .then((message) => message.sid);
         });
@@ -141,9 +141,9 @@ module.exports = (db, accountSid, authToken) => {
 
           twilioClient.messages
             .create({
-              body: `Your food is being prepared stay tuned!`,
+              body: `Your order is ready for pickup 😋😋`,
               to: `${resultUserOrder.rows[0].phone_number}`, // Text this number
-              from: "+17052425790", // From a valid Twilio number
+              from: twilioNumber, // From a valid Twilio number
             })
             .then((message) => message.sid);
         });

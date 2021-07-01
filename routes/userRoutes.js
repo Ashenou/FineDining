@@ -3,7 +3,7 @@ const router = express.Router();
 
 const twilio = require("twilio");
 
-module.exports = (db, accountSid, authToken) => {
+module.exports = (db, accountSid, authToken,twilioNumber) => {
   // GET /login -- View login page
   router.get("/login", (req, res) => {
     let templateVars = { user: req.cookies.user };
@@ -132,7 +132,7 @@ module.exports = (db, accountSid, authToken) => {
             .create({
               body: `\n Customer: ${userName}  has submitted order:# ${textString} \n 😋😋`,
               to: `${result.rows[0].phone_number}`, // Text this number
-              from: "+16572247880", // From a valid Twilio number
+              from: `${twilioNumber}`, // From a valid Twilio number
             })
             .then((message) => message.sid);
         })
