@@ -1,7 +1,7 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-var cookie = require('cookie')
-const formatArrayObject = require('../public/helper/helper')
+//var cookie = require('cookie')
+const formatArrayObject = require("../public/helper/helper");
 
 module.exports = (db) => {
   // GET :/orders Display's' orders for the restaurant portal
@@ -14,32 +14,42 @@ module.exports = (db) => {
 
     if (user) {
     if (user.restaurant_account) {
+<<<<<<< HEAD
 
       db.query(`SELECT orders.id ,created_at,completed_at,accepted_at, user_id, (items.name) as item_name
+=======
+      db.query(
+        `SELECT orders.id,created_at,completed_at,accepted_at, user_id, (items.name) as item_name
+>>>>>>> 7d552953faa901fe3e774744933587f5dfcc4434
           FROM orders
           JOIN users on users.id=user_id
           JOIN order_items on order_id = orders.id
           JOIN items on items.id = order_items.item_id
           WHERE completed_at IS NULL
-          GROUP BY orders.id,item_name,user_id;`)
+          GROUP BY orders.id,item_name,user_id;`
+      )
         .then((result) => {
-
           //formatting the Array of objects
           const data = formatArrayObject(result.rows);
 
           const templateVars = {
             data,
+<<<<<<< HEAD
             user
           }
 
+=======
+          };
+>>>>>>> 7d552953faa901fe3e774744933587f5dfcc4434
           res.render("restaurant_orders", templateVars);
         })
         .catch((err) => {
           console.log(err.message);
-        })
-        //this is to show the timer for the current order in process and order information.
+        });
+      //this is to show the timer for the current order in process and order information.
     } else {
       //Orders route for user display
+<<<<<<< HEAD
       db.query(`SELECT orders.id, accepted_at, completed_at, user_id, (items.name) as item_name
       FROM orders
       JOIN users on users.id = user_id
@@ -64,6 +74,9 @@ module.exports = (db) => {
     }
   } else {
       res.redirect('/login')
+=======
+      return res.redirect("/");
+>>>>>>> 7d552953faa901fe3e774744933587f5dfcc4434
     }
   });
 
@@ -76,4 +89,4 @@ module.exports = (db) => {
   });
 
   return router;
-}
+};
