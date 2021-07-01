@@ -14,13 +14,7 @@ module.exports = (db) => {
 
     if (user) {
     if (user.restaurant_account) {
-<<<<<<< HEAD
-
       db.query(`SELECT orders.id ,created_at,completed_at,accepted_at, user_id, (items.name) as item_name
-=======
-      db.query(
-        `SELECT orders.id,created_at,completed_at,accepted_at, user_id, (items.name) as item_name
->>>>>>> 7d552953faa901fe3e774744933587f5dfcc4434
           FROM orders
           JOIN users on users.id=user_id
           JOIN order_items on order_id = orders.id
@@ -34,13 +28,9 @@ module.exports = (db) => {
 
           const templateVars = {
             data,
-<<<<<<< HEAD
             user
           }
 
-=======
-          };
->>>>>>> 7d552953faa901fe3e774744933587f5dfcc4434
           res.render("restaurant_orders", templateVars);
         })
         .catch((err) => {
@@ -49,7 +39,7 @@ module.exports = (db) => {
       //this is to show the timer for the current order in process and order information.
     } else {
       //Orders route for user display
-<<<<<<< HEAD
+
       db.query(`SELECT orders.id, accepted_at, completed_at, user_id, (items.name) as item_name
       FROM orders
       JOIN users on users.id = user_id
@@ -74,9 +64,6 @@ module.exports = (db) => {
     }
   } else {
       res.redirect('/login')
-=======
-      return res.redirect("/");
->>>>>>> 7d552953faa901fe3e774744933587f5dfcc4434
     }
   });
 
