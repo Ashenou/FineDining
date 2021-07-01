@@ -1,6 +1,7 @@
-const twilio = require("twilio");
 const express = require("express");
 const router = express.Router();
+
+const twilio = require("twilio");
 
 module.exports = (db, accountSid, authToken) => {
   // GET /login -- View login page
@@ -28,9 +29,8 @@ module.exports = (db, accountSid, authToken) => {
 
   /// GET :userid/items Shows restaurant's menu to user
   router.get("/items", (req, res) => {
-    //// implement login login with req.id and req.restaurant_check
     let userId = req.cookies["user"].id;
-    console.log("Line 62 ", userId);
+    //console.log("Line 62 ", userId);
 
     let templateVars = {};
     db.query(
@@ -65,36 +65,73 @@ module.exports = (db, accountSid, authToken) => {
       })
       .catch((err) => console.log(err.message));
 
-    console.log("createdOrderId :>>zz ", createdOrderId);
+    //console.log("createdOrderId :>>zz ", createdOrderId);
 
     // loop through all items in the form -- item is id of item in database and it's value is the quantity
     for (const item in req.body) {
       // Loop through each item in the form and get back the quantity for each
       if (req.body[item] !== "") {
         orderFilled = true;
+
+        console.log(req.body[item]);
         for (let index = 0; index < req.body[item]; index++) {
+          console.log("line76 [item]", item);
+          console.log("line77 req.body[item]", req.body[item]);
           db.query(
-            `INSERT INTO order_items(order_id,item_id,customer_id,restaurant_id) VALUES($1,$2,$3,$4)`,
+            `INSERT INTO order_items(order_id,item_id,customer_id,restaurant_id) VALUES($1,$2,$3,$4) RETURNING *;`,
             [createdOrderId, item, userId, restaurantId]
           )
-            .then(() => {})
+            .then((res) => {
+              console.log(`line83 ${res.rows[0].order_id}`);
+            })
             .catch((err) => console.log("line 74", err.message));
         }
       }
     }
-    // Checks if order was not empty
-    if (orderFilled) {
-      // Twilio Implementation
-      const twilioClient = new twilio(accountSid, authToken);
+    // Message body forming
+    let textbodyObj = await db
+      .query(
+        `select items.name,order_items.order_id,count(*) as quantity
+      from order_items
+      join items on order_items.item_id = items.id
+      where order_items.order_id=$1 group by items.name,order_id,item_id;`,
+        [createdOrderId]
+      )
+      .then((result) => {
+        //return result.rows;
+        console.log(result.rows);
+      })
+      .catch((err) => console.log(err.message));
 
-      twilioClient.messages
-        .create({
-          body: `Your order was created please wait 45 minutes until it's ready 👻`,
-          to: `${req.cookies["user"].phone_number}`, // Text this number
-          from: "+16572247880", // From a valid Twilio number
-        })
-        .then((message) => message.sid);
+    //console.log(`textbodyObj`, textbodyObj);
+    let textString = `${createdOrderId}`;
+    for (const key in textbodyObj) {
+      textString +=
+        "\nx" + textbodyObj[key].quantity + " " + textbodyObj[key].name;
     }
+    console.log(textString);
+    console.log("line 85", req.cookies["user"].name);
+    //Checks if order was not empty
+    // if (orderFilled) {
+    //   // Twilio Implementation
+    //   let userName = req.cookies["user"].name;
+    //   const twilioClient = new twilio(accountSid, authToken);
+    //   // fix this to be a message that will be sent to restaurant
+    //   db.query(
+    //     `SELECT phone_number FROM users where name='Fine Dine' AND restaurant_account=true ;`
+    //   )
+    //     .then((result) => {
+    //       //console.log(result.rows[0].phone_number);
+    //       twilioClient.messages
+    //         .create({
+    //           body: `\n Customer: ${userName}  has submitted order:# ${textString} \n 😋😋`,
+    //           to: `${result.rows[0].phone_number}`, // Text this number
+    //           from: "+16572247880", // From a valid Twilio number
+    //         })
+    //         .then((message) => message.sid);
+    //     })
+    //     .catch((err) => console.log(err.message));
+    // }
     res.redirect("/users/items");
   });
   return router;

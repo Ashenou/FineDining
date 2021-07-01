@@ -72,7 +72,6 @@ app.use(express.static("public"));
 // app.use("/", apiRoutes);
 
 // /restaurant/endpoints
-const restaurantRoutes = require("./routes/restaurantRoutes");
 // app.use('/', homePageRoutes);
 
 // /users/endpoints
