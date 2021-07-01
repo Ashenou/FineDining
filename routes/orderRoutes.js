@@ -60,7 +60,7 @@ module.exports = (db, accountSid, authToken) => {
             .create({
               body: `Your food is being prepared stay tuned!`,
               to: `${resultUserOrder.rows[0].phone_number}`, // Text this number
-              from: "+13078777489", // From a valid Twilio number
+              from: "+17052425790", // From a valid Twilio number
             })
             .then((message) => message.sid);
         });
