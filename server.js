@@ -21,6 +21,7 @@ db.connect();
 const fs = require("fs")
 const sass = require("sass");
 
+
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
@@ -48,16 +49,20 @@ app.get("/styles/:css_file", (req, res, next) => {
   next()
 });
 
+// const accountSid = process.env.TWILIO_ACCOUNT_SID;
+// const authToken = process.env.TWILIO_AUTH_TOKEN;
+
+// const client = new twilio(accountSid, authToken);
+// // client.messages.create({
+// // body: 'Hello from Node',
+// // to: '+17057839641',  // Text this number
+// // from: '+17052425790' // From a valid Twilio number
+// // })
+// // .then((message) => message.sid);
+
+// Twilio env variables - send sms when order is accepted
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
-
-const client = new twilio(accountSid, authToken);
-// client.messages.create({
-// body: 'Hello from Node',
-// to: '+17057839641',  // Text this number
-// from: '+17052425790' // From a valid Twilio number
-// })
-// .then((message) => message.sid);
 
 
 app.use(express.static("public"));
@@ -72,11 +77,12 @@ const restaurantRoutes = require('./routes/restaurantRoutes')
   // app.use('/', homePageRoutes);
 
 const userRoutes = require('./routes/userRoutes')
-app.use('/login', userRoutes(db));
+app.use('/users', userRoutes(db));
 
+// /users/endpoints
+const orderRoutes = require("./routes/orderRoutes");
+app.use('/orders', orderRoutes(db, accountSid, authToken));
 
-const orderRoutes = require('./routes/orderRoutes')
-app.use('/orders', orderRoutes(db));
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
