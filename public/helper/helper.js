@@ -1,3 +1,5 @@
+const { CustomerProfilesEntityAssignmentsContext } = require("twilio/lib/rest/trusthub/v1/customerProfiles/customerProfilesEntityAssignments");
+
 // Filters the array of objects and return single object for every unique order_id and also returns all item in an array for that order
 const formatArrayObject = function(arrObj) {
   const formattedArrObj = [];
@@ -19,5 +21,6 @@ const formatArrayObject = function(arrObj) {
   //removing the null entries from the object of array's.
   return formattedArrObj.filter(ele => ele != null);
 }
+
 
 module.exports = formatArrayObject;
