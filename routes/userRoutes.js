@@ -3,7 +3,7 @@ const router = express.Router();
 
 const twilio = require("twilio");
 
-module.exports = (db, accountSid, authToken) => {
+module.exports = (db, accountSid, authToken,twilioNumber) => {
   // GET /login -- View login page
   router.get("/login", (req, res) => {
     let templateVars = { user: req.cookies.user };
@@ -15,9 +15,9 @@ module.exports = (db, accountSid, authToken) => {
     const email = req.body.email;
     const password = req.body.password;
     db.query(`SELECT * FROM users WHERE email = $1 AND password = $2;`, [
-        email,
-        password,
-      ])
+      email,
+      password,
+    ])
       .then((result) => {
         if (result.rows[0]) {
           res.cookie("user", result.rows[0]);
@@ -34,7 +34,6 @@ module.exports = (db, accountSid, authToken) => {
 
   /// GET /items Shows restaurant's menu to user
   router.get("/items", (req, res) => {
-
     //// implement login login with req.id and req.restaurant_check
     let userId = req.cookies["user"].id;
     // console.log("Line 62 ", userId);
@@ -44,7 +43,7 @@ module.exports = (db, accountSid, authToken) => {
       db.query(`SELECT items.* , item_type.name as item_type_name
     FROM items
     JOIN item_type ON items.type_id = item_type.id ;`
-        )
+      )
         .then((result) => {
           templateVars["items"] = result.rows;
           return res.render("items", templateVars);
@@ -57,7 +56,7 @@ module.exports = (db, accountSid, authToken) => {
 
   //// POST :userid/orders Submits users' order
   // async here is to be able to use await for the variable
-  router.post("/items", async(req, res) => {
+  router.post("/items", async (req, res) => {
     // insert a new order in database and get back the id;
     // convert js date to sql date
     //let createdOrderId = await ;
@@ -67,7 +66,8 @@ module.exports = (db, accountSid, authToken) => {
 
     let createdOrderId = await db
       .query(
-        `INSERT INTO ORDERS(created_at,user_id) VALUES ($1,$2) RETURNING *;`, [new Date().toISOString().slice(0, 19).replace("T", " "), userId]
+        `INSERT INTO ORDERS(created_at,user_id) VALUES ($1,$2) RETURNING *;`,
+        [new Date().toISOString().slice(0, 19).replace("T", " "), userId]
       )
       .then((res) => {
         return res.rows[0].id;
@@ -76,31 +76,33 @@ module.exports = (db, accountSid, authToken) => {
 
     // Returns an array of objects from select query where it checks the quantity and the name items in the user's order
     let textbodyObj = await Promise.all([
-        (() => {
-          for (const item in req.body) {
-            // loop through all items in the form -- item is id of item in database and it's value is the quantity
-            // Loop through each item in the form and get back the quantity for each
-            if (req.body[item] !== "") {
-              orderFilled = true;
+      (() => {
+        for (const item in req.body) {
+          // loop through all items in the form -- item is id of item in database and it's value is the quantity
+          // Loop through each item in the form and get back the quantity for each
+          if (req.body[item] !== "") {
+            orderFilled = true;
 
-              for (let index = 0; index < req.body[item]; index++) {
-                db.query(
-                    `INSERT INTO order_items(order_id,item_id,customer_id,restaurant_id) VALUES($1,$2,$3,$4) RETURNING *;`, [createdOrderId, item, userId, restaurantId]
-                  )
-                  .then()
-                  .catch((err) => console.log("line 74", err.message));
-              }
+            for (let index = 0; index < req.body[item]; index++) {
+              db.query(
+                `INSERT INTO order_items(order_id,item_id,customer_id,restaurant_id) VALUES($1,$2,$3,$4) RETURNING *;`,
+                [createdOrderId, item, userId, restaurantId]
+              )
+                .then()
+                .catch((err) => console.log("line 74", err.message));
             }
           }
-        })(),
-      ])
+        }
+      })(),
+    ])
       .then(() => {
         return db
           .query(
             `select items.name,order_items.order_id,count(*) as quantity
       from order_items
       join items on order_items.item_id = items.id
-      where order_items.order_id=$1 group by items.name,order_id,item_id;`, [createdOrderId]
+      where order_items.order_id=$1 group by items.name,order_id,item_id;`,
+            [createdOrderId]
           )
           .then((result) => {
             return result.rows;
@@ -122,14 +124,14 @@ module.exports = (db, accountSid, authToken) => {
       let userName = req.cookies["user"].name;
       const twilioClient = new twilio(accountSid, authToken);
       db.query(
-          `SELECT phone_number FROM users where name='Fine Dine' AND restaurant_account=true ;`
-        )
+        `SELECT phone_number FROM users where name='Fine Dine' AND restaurant_account=true ;`
+      )
         .then((result) => {
           twilioClient.messages
             .create({
               body: `\n Customer: ${userName}  has submitted order:# ${textString} \n 😋😋`,
               to: `${result.rows[0].phone_number}`, // Text this number
-              from: "+16572247880", // From a valid Twilio number
+              from: `${twilioNumber}`, // From a valid Twilio number
             })
             .then((message) => message.sid);
         })

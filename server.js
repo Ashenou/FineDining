@@ -63,7 +63,7 @@ app.get("/styles/:css_file", (req, res, next) => {
 // Twilio env variables - send sms when order is accepted
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
-
+const twilioNumber = process.env.TWILIO_NUMBER;
 
 app.use(express.static("public"));
 
@@ -75,11 +75,11 @@ app.use("/", apiRoutes);
 
 // /users/endpoints
 const orderRoutes = require("./routes/orderRoutes");
-app.use('/orders', orderRoutes(db, accountSid, authToken));
+app.use('/orders', orderRoutes(db, accountSid, authToken,twilioNumber));
 
 // /users/endpoints
 const userRoutes = require("./routes/userRoutes");
-app.use("/users", userRoutes(db, accountSid, authToken));
+app.use("/users", userRoutes(db, accountSid, authToken,twilioNumber));
 
 
 // Mount all resource routes

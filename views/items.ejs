@@ -37,6 +37,7 @@
                   <span>
                     <%= item.name %>
                       <input class="order_ammount" placeholder="0" type="text" name="<%=item.id %>">
+                      $<%= item.cost %>
                   </span>
                   <br>
                   <%= item.description %>
@@ -49,8 +50,8 @@
                         <div class="item">
                           <span>
                             <%=item.name %>
-
                               <input class="order_ammount" placeholder="0" type="text" name="<%=item.id %>">
+                              $<%= item.cost %>
                           </span>
                           <br>
                           <%= item.description %>
@@ -65,8 +66,9 @@
               <% if(item.item_type_name==='beverage' ) {%>
                 <div class="item">
                   <span>
-                    <%=item.name %>
-                      <input class="order_ammount" placeholder="0" type="text" name="<%=item.id %>">
+                    <%= item.name %>
+                    <input class="order_ammount" placeholder="0" type="text" name="<%=item.id %>">
+                    $<%= item.cost %>
                   </span>
                   <br>
                   <%= item.description %>
@@ -81,6 +83,7 @@
                         <span>
                           <%=item.name %>
                             <input class="order_ammount" placeholder="0" type="text" name="<%=item.id %>">
+                            $<%= item.cost %>
                         </span>
                         <br>
                         <%= item.description %>
