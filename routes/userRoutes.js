@@ -147,15 +147,6 @@ module.exports = (db, accountSid, authToken, twilioNumber) => {
     res.render("register", templateVars)
   })
 
-  // router.post("/register", (req, res) => {
-    // name = req.body.name;
-    // phone_number = `+1${req.body.email}`;
-    // email = req.body.email;
-    // password = req.body.password;
-    // if (name && phone_number && email && password) {
-    // db.query(`INSERT ($1, $2, $3, $4) INTO users`, [name, phone_number, email, password])
-
-  // })
 
   router.post("/logout", (req, res) => {
     res.clearCookie("user");

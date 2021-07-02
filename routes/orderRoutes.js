@@ -58,7 +58,7 @@ module.exports = (db, accountSid, authToken, twilioNumber) => {
           })
       }
     } else {
-      res.redirect('/users/login')
+      res.redirect('/login')
     }
   });
 
@@ -182,3 +182,4 @@ module.exports = (db, accountSid, authToken, twilioNumber) => {
 
   return router;
 };
+
