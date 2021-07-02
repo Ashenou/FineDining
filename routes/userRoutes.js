@@ -35,7 +35,7 @@ module.exports = (db, accountSid, authToken, twilioNumber) => {
   /// GET /items Shows restaurant's menu to user
   router.get("/items", (req, res) => {
     //// implement login login with req.id and req.restaurant_check
-    let userId = req.cookies["user"].id;
+    //let userId = req.cookies["user"].id;
     // console.log("Line 62 ", userId);
     const user = req.cookies.user;
     if (req.cookies["user"]) {

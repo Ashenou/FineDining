@@ -58,7 +58,7 @@ module.exports = (db, accountSid, authToken, twilioNumber) => {
           })
       }
     } else {
-      res.redirect('/login')
+      res.redirect('/users/login')
     }
   });
 

@@ -46,8 +46,27 @@ input.form-control {
   padding: 10px;
   margin: 10px;
 }
+
 div.button-container {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+}
+
+button.btn {
+  color: #FFF2EB;
+  background-color: #582c4d;
+  border-color: #b7990d;
+}
+
+.navbar-brand {
+  color: #582c4d;
+}
+
+a.nav-link {
+  color: #582c4d;
+}
+
+.display-4 {
+  color: #582c4d;
 }
