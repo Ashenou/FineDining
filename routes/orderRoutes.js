@@ -37,7 +37,7 @@ module.exports = (db, accountSid, authToken, twilioNumber) => {
       } else {
         //Orders route for user display
 
-        db.query(`SELECT orders.id, accepted_at, completed_at, user_id, (items.name) as item_name, COUNT(items.name) AS quantity
+        db.query(`SELECT orders.id, accepted_at, completed_at, user_id, (items.name) as item_name, COUNT(items.name) AS quantity,total
         FROM orders
         JOIN users on users.id = user_id
         JOIN order_items on order_id = orders.id
@@ -182,4 +182,3 @@ module.exports = (db, accountSid, authToken, twilioNumber) => {
 
   return router;
 };
-
