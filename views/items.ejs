@@ -83,10 +83,10 @@
                   <% } %>
                 </div>
 
-                  <h3>Deserts:</h3>
+                  <h3>Desserts:</h3>
                   <div class="item">
                   <% for(let item of items) { %>
-                    <% if(item.item_type_name==='desert' ) {%>
+                    <% if(item.item_type_name==='dessert' ) {%>
                       <div class="inner-item">
                         <span>
                           <%=item.name %>
@@ -94,7 +94,7 @@
                             $<%= item.cost %>
                         </span>
                         <br>
-                        <%= item.description %> <br class="break">
+                        <%= item.description %>
 
                       </div>
                       <% } %>

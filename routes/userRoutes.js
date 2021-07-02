@@ -3,7 +3,7 @@ const router = express.Router();
 
 const twilio = require("twilio");
 
-module.exports = (db, accountSid, authToken,twilioNumber) => {
+module.exports = (db, accountSid, authToken, twilioNumber) => {
   // GET /login -- View login page
   router.get("/login", (req, res) => {
     let templateVars = { user: req.cookies.user };
@@ -74,27 +74,27 @@ module.exports = (db, accountSid, authToken,twilioNumber) => {
       })
       .catch((err) => console.log(err.message));
 
+    let promises = [];
     // Returns an array of objects from select query where it checks the quantity and the name items in the user's order
-    let textbodyObj = await Promise.all([
-      (() => {
-        for (const item in req.body) {
-          // loop through all items in the form -- item is id of item in database and it's value is the quantity
-          // Loop through each item in the form and get back the quantity for each
-          if (req.body[item] !== "") {
-            orderFilled = true;
+    for (const item in req.body) {
+      // loop through all items in the form -- item is id of item in database and it's value is the quantity
+      // Loop through each item in the form and get back the quantity for each
+      if (req.body[item] !== "") {
+        orderFilled = true;
 
-            for (let index = 0; index < req.body[item]; index++) {
-              db.query(
-                `INSERT INTO order_items(order_id,item_id,customer_id,restaurant_id) VALUES($1,$2,$3,$4) RETURNING *;`,
-                [createdOrderId, item, userId, restaurantId]
-              )
-                .then()
-                .catch((err) => console.log("line 74", err.message));
-            }
-          }
+        for (let index = 0; index < req.body[item]; index++) {
+          let promise = db
+            .query(
+              `INSERT INTO order_items(order_id,item_id,customer_id,restaurant_id) VALUES($1,$2,$3,$4) RETURNING *;`,
+              [createdOrderId, item, userId, restaurantId]
+            )
+            .then()
+            .catch((err) => console.log("line 74", err.message));
+          promises.push(promise);
         }
-      })(),
-    ])
+      }
+    }
+    let textbodyObj = await Promise.all(promises)
       .then(() => {
         return db
           .query(
@@ -118,6 +118,7 @@ module.exports = (db, accountSid, authToken,twilioNumber) => {
         "\nx" + textbodyObj[key].quantity + " " + textbodyObj[key].name;
     }
 
+    console.log(textbodyObj);
     //Checks if order was not empty
     if (orderFilled) {
       // Twilio Implementation
