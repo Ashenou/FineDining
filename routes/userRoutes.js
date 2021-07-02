@@ -4,6 +4,7 @@ const router = express.Router();
 const twilio = require("twilio");
 
 module.exports = (db, accountSid, authToken, twilioNumber) => {
+
   // GET /login -- View login page
   router.get("/login", (req, res) => {
     let templateVars = { user: req.cookies.user };
@@ -35,7 +36,6 @@ module.exports = (db, accountSid, authToken, twilioNumber) => {
   /// GET /items Shows restaurant's menu to user
   router.get("/items", (req, res) => {
     //// implement login login with req.id and req.restaurant_check
-    let userId = req.cookies["user"].id;
     // console.log("Line 62 ", userId);
     const user = req.cookies.user;
     if (req.cookies["user"]) {
@@ -140,6 +140,22 @@ module.exports = (db, accountSid, authToken, twilioNumber) => {
     }
     res.redirect("/users/items");
   });
+
+  router.get("/register", (req, res) => {
+    const user = req.cookies.user;
+    templateVars = { user }
+    res.render("register", templateVars)
+  })
+
+  // router.post("/register", (req, res) => {
+    // name = req.body.name;
+    // phone_number = `+1${req.body.email}`;
+    // email = req.body.email;
+    // password = req.body.password;
+    // if (name && phone_number && email && password) {
+    // db.query(`INSERT ($1, $2, $3, $4) INTO users`, [name, phone_number, email, password])
+
+  // })
 
   router.post("/logout", (req, res) => {
     res.clearCookie("user");
