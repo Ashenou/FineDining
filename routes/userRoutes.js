@@ -35,13 +35,12 @@ module.exports = (db, accountSid, authToken, twilioNumber) => {
   /// GET /items Shows restaurant's menu to user
   router.get("/items", (req, res) => {
     //// implement login login with req.id and req.restaurant_check
-    //let userId = req.cookies["user"].id;
-    //console.log("Line 62 ", userId);
+    let userId = req.cookies["user"].id;
+    // console.log("Line 62 ", userId);
     const user = req.cookies.user;
     if (req.cookies["user"]) {
       let templateVars = { user };
-      db.query(
-        `SELECT items.* , item_type.name as item_type_name
+      db.query(`SELECT items.* , item_type.name as item_type_name
     FROM items
     JOIN item_type ON items.type_id = item_type.id ;`
       )

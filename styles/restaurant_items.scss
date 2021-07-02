@@ -5,16 +5,26 @@
 // .order {
 //   margin-top: 80px;
 // }
+
+h1 {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.order {
+  background-color: #FFF2EB;
+}
 .container{
  display: flex;
  flex-direction: row;
  //align-content:stretch;
 }
 .item{
-  border:solid 2px black;
+  border-radius: 10px;
+  border:solid 2px #582c4d;
+  background-color: white;
   font :bold;
-  margin :1px;
-  padding: 1px;
+  margin :5px;
+  padding: 5px;
 }
 .menu{
   display: flex;
@@ -23,10 +33,33 @@
 .first-menu-column{
   align-items: flex-start ;
   float:left;
-  width: 45%;
+  width: 60%;
 }
 .second-menu-column{
   align-items: flex-end;
   float:right;
-  width: 45%;
+  width: 60%;
+}
+
+.order_ammount {
+  width: 30px;
+  float: right;
+}
+
+.navbar-brand {
+  color: #582c4d;
+}
+
+a.nav-link {
+  color: #582c4d;
+}
+
+.display-4 {
+  color: #582c4d;
+}
+
+button.btn {
+  color: #FFF2EB;
+  background-color: #582c4d;
+  border-color: #b7990d;
 }
