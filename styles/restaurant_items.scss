@@ -67,3 +67,16 @@ button.btn {
 div.inner-item {
   margin: 1vh;
 }
+
+div.nav-user {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+
+}
+
+div.button-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
