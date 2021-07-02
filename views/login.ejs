@@ -11,21 +11,21 @@
 </head>
 <%- include('_partials/_header') %>
 
-  <body>
+  <body class="login-page">
     <div class="login-container" style="margin-top: 200px;">
       <form id="login-form" method="POST" action="/users/login">
-        <p>Login</p>
+        <h2 class="title">Login</h2>
         <div>
-          <input id="email" type="email" name="email" placeholder="Email">
+          <input class="form-control form-control-lg" name="email" type="email" id="email" placeholder="Enter email">
         </div>
 
         <div>
-          <input id="password" type="password" name="password" placeholder="Password">
+          <input class="form-control" name="password" type="password" id="password" placeholder="Password">
         </div>
 
-        <div>
-          <button>Login</button>
-          <a id="login-form__cancel" href="#">Cancel</a>
+        <div class="button-container">
+          <button class="btn btn-success" type="submit">Login</button>
+          <a href="http://localhost:8080/" class="btn btn-success" role="button">Cancel</a>
         </div>
       </form>
     </div>

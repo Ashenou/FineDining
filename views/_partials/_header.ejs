@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
   integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="/styles/header.css" type="text/css" />
 
 <header class="header">
   <nav class="navbar navbar-expand-lg sticky-top py-3">
@@ -16,10 +17,20 @@
                   <li class="nav-item"><a href="/orders" class="nav-link font-weight-bold">Orders</a></li>
                   <li>
                     <% if (!user) { %>
+                  <div class="nav-user">
                     <form action="/users/login" method="GET">
                       <button type="submit" class="btn btn-light">Login</button>
                     </form>
-                    <% } %>
+
+                    <form action="/users/register" method="GET">
+                      <button type="submit" class="btn btn-light">Register</button>
+                    </form>
+                  </div>
+                    <% } else { %>
+                      <form action="/users/logout" method="POST">
+                        <button type="submit" class="btn btn-light">Logout</button>
+                      </form>
+                      <% } %>
                   </li>
               </ul>
           </div>

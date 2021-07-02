@@ -1,11 +1,53 @@
-body {
+body.login-page {
+  background-color: #FFF2EB;
+}
+html{
   background-color: #FFF2EB;
 }
 div.login-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100%;
   margin: 200px;
   background-color: #FFF2EB;
+}
+h2.title {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+
+button.btn {
+  background-color: #08a045;
+  border:solid 1px #225560;
+}
+
+
+a.btn {
+  background-color: #ea3546;
+  border:solid 1px #225560;
+}
+
+button.btn:hover {
+  background-color: #FFF2EB;
+  border:solid 1px #225560;
+  color:  black;
+}
+
+a.btn:hover {
+  background-color: #FFF2EB;
+  border:solid 1px #225560;
+  color:  black;
+}
+
+input.form-control {
+  padding: 10px;
+  margin: 10px;
+}
+div.button-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
 }

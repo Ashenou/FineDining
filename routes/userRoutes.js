@@ -139,5 +139,12 @@ module.exports = (db, accountSid, authToken,twilioNumber) => {
     }
     res.redirect("/users/items");
   });
+
+  router.post("/logout", (req, res) => {
+    res.clearCookie("user");
+    res.redirect("/");
+
+  })
+
   return router;
 };
