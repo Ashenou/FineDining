@@ -1,19 +1,8 @@
-//order acepted at 8pm
-//order expected to be completed at 8:45pm
-//current time - 8:45pm
-
-//let t = "08:30"; // hh:mm
-//let ms = Number(t.split(':')[0]) * 60 * 60 * 1000 + Number(t.split(':')[1]) * 60 * 1000;
-//console.log(ms);
-
-
-
 //((8pm)accepted_at + 45(8:45pm)) - currentTime(8:15) = timeLeft (30mins)
-let acceptedTime = $('#accepted_at').val()//.slice(15, 24).replace('T', ' ');
+let acceptedTime = $('#accepted_at').val();
 // convert acceptedTime to MS
 let acceptedTimeMs = new Date(acceptedTime).getTime();
-let currentTimeMs = new Date().getTime()
-//console.log(new Date(acceptedTime).toLocaleString("en-US", {timeZone: "America/New_York"}))
+let currentTimeMs = new Date().getTime();
 // add 45 mins via milliseconds(
 let cookingTimeMs = (1000 * 60 * 45); //ms to seconds to minutes
 let expectedCompletionTime = acceptedTimeMs + cookingTimeMs;
@@ -41,5 +30,3 @@ function displayTime(second) {
 function endCount() {
   timeH.innerHTML = 'Order completed! you should be notified soon';
 }
-// acceptedTime //// 23:29:14
-// currentTime //// 00:29:05

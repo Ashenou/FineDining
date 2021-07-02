@@ -13,6 +13,7 @@
   <!-- <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" /> -->
   <!-- <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" /> -->
   <link rel="stylesheet" href="/styles/restaurant_items.css" type="text/css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
   <!-- <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script> -->
@@ -22,11 +23,12 @@
 </head>
 <%- include('_partials/_header') %>
 <body class="order">
+  <div class="container">
 
-    <div class="container">
+    <form method="POST" action="/users/items">
+      <h1>Menu</h1>
+      <div class='menu'>
 
-      <form method="POST" action="/users/items">
-        <div class='menu'>
           <div class="first-menu-column">
             <h3>Entree:</h3>
             <% for(let item of items) { %>
@@ -34,7 +36,7 @@
                 <div class="item">
                   <span>
                     <%= item.name %>
-                      <input type="text" name="<%=item.id %>">
+                      <input class="order_ammount" placeholder="0" type="text" name="<%=item.id %>">
                   </span>
                   <br>
                   <%= item.description %>
@@ -47,7 +49,8 @@
                         <div class="item">
                           <span>
                             <%=item.name %>
-                              <input type="text" name="<%=item.id %>">
+
+                              <input class="order_ammount" placeholder="0" type="text" name="<%=item.id %>">
                           </span>
                           <br>
                           <%= item.description %>
@@ -57,29 +60,40 @@
           </div>
 
           <div class="second-menu-column">
-            <h3>Beverage:</h3>
+            <h3>Beverages:</h3>
             <% for(let item of items) { %>
-              <% if(item.item_type_name !=='entree' && item.item_type_name !=='appetizer' ) {%>
+              <% if(item.item_type_name==='beverage' ) {%>
                 <div class="item">
                   <span>
-                    <%= item.name %>
-                      <input type="text" name="<%= item.id %>">
+                    <%=item.name %>
+                      <input class="order_ammount" placeholder="0" type="text" name="<%=item.id %>">
                   </span>
-                  <!-- <button type="button" class="btn btn-outline-primary">Add to cart</button> -->
                   <br>
                   <%= item.description %>
                 </div>
                 <% } %>
                   <% } %>
-          </div>
+
+                  <h3>Deserts:</h3>
+                  <% for(let item of items) { %>
+                    <% if(item.item_type_name==='desert' ) {%>
+                      <div class="item">
+                        <span>
+                          <%=item.name %>
+                            <input class="order_ammount" placeholder="0" type="text" name="<%=item.id %>">
+                        </span>
+                        <br>
+                        <%= item.description %>
+                      </div>
+                      <% } %>
+                        <% } %>
+
+              </div>
           <!-- <td><button type="submit" class="btn btn-outline-danger">Delete</button></td> -->
         </div>
-        <button type="submit" id="submit">Create order</button>
+        <button class="btn btn-success" type="submit">Submit Order</button>
       </form>
     </div>
 </body>
-<!-- <script>
-  document.getElementById("submit").onclick(alert("Your order was sent to restaurant"))
-</script> -->
 
 </html>
