@@ -5,5 +5,6 @@ CREATE TABLE orders (
   created_at TIMESTAMP NOT NULL,
 	accepted_at TIMESTAMP,
 	completed_at TIMESTAMP,
+  total BIGINT,
 	user_id INTEGER REFERENCES users(id) ON DELETE CASCADE
   );
