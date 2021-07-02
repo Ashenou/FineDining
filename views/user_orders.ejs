@@ -25,6 +25,7 @@
                         <th scope="col">Order Items</th>
                         <th scope="col">Items Quantity</th>
                         <th scope="col">Order Status</th>
+                        <th scope="col">Order Total</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -52,7 +53,10 @@
                                         <h1 value="<%=row.accepted_at%>" id="user_timer"><input type="hid" id="accepted_at" value="<%=row.accepted_at%>"></h1>
                                         <%}%>
                             </td>
-                            <td></td>
+                            <td>
+                                $
+                                <%= (row.total/100) %>
+                            </td>
                             </td>
                         </tr>
                         <%} %>
